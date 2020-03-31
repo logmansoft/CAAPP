@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_stockpicking_catchweight" inherit_id="stock.report_picking">
+		<xpath expr="//table[2]/thead/tr/th[2]" position="after">
+			<th width="10%" class="text-right" groups="tis_catch_weight.group_catch_weight">CW QTY</th>	
+		</xpath>
+			<!--<span t-field="move.product_cw_uom_qty"/>-->
+			<!--<span t-field="move.product_cw_uom"/>-->
+		<xpath expr="//table[2]/tbody/t/t/tr/td[2]" position="after">
+			<t t-if="move.product_id.tracking == 'serial' ">
+				<t t-set="serial_qty" t-value="move.product_cw_uom_qty / move.product_uom_qty"/>
+				<td class="text-right" groups="tis_catch_weight.group_catch_weight">
+					<span t-esc="serial_qty"/>
+					<span t-field="move.product_cw_uom"/>
+				</td>
+			</t>
+			<t t-else="">
+				<td class="text-right" groups="tis_catch_weight.group_catch_weight">
+					<span t-field="move.product_cw_uom_qty"/>
+					<span t-field="move.product_cw_uom"/>
+				</td>
+			</t>
+
+		</xpath>
+	</template>
+</odoo>

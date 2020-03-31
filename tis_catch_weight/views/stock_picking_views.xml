@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_picking_form_catchweight">
+    		<field name="name">picking.form.inherit</field>
+    		<field name="model">stock.picking</field>
+    		<field name="inherit_id" ref="stock.view_picking_form"/>
+    		<field name="arch" type="xml">
+    			<xpath expr="//field[@name='product_uom']" position="after">
+    				<field name="product_cw_uom_qty" attrs="{'readonly': [('is_initial_demand_editable', '=', False)]}" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="cw_qty_done" attrs="{'readonly': [('is_quantity_done_editable', '=', False)]}" force_save="1" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="product_cw_uom" attrs="{'readonly': [('state', '!=', 'draft'), ('additional', '=', False)]}" force_save="1" groups="tis_catch_weight.group_catch_weight"/>
+    			</xpath>
+    		</field>
+    	</record>
+    </data>
+</odoo>

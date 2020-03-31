@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+		<record model="ir.ui.view" id="view_stock_move_line_form_catchweight">
+    		<field name="name">stock.move.line.inherit</field>
+    		<field name="model">stock.move.line</field>
+    		<field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+    		<field name="arch" type="xml">
+    			<xpath expr="//field[@name='product_uom_id']" position="after">
+    				<field name="product_cw_uom_qty" attrs="{'readonly': ['|', ('is_initial_demand_editable', '=', False), ('parent.picking_type_entire_packs', '=', True)], 'required': [('product_id', '!=', False)]}" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="cw_qty_done" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="product_cw_uom" attrs="{'readonly': ['|', ('is_initial_demand_editable', '=', False), ('parent.picking_type_entire_packs', '=', True)], 'required': [('product_id', '!=', False)]}" groups="tis_catch_weight.group_catch_weight"/>
+    			</xpath>
+    		</field>
+    	</record>
+    	
+    	<!--<record model="ir.ui.view" id="view_stock_quant_package_form_catchweight">-->
+    		<!--<field name="name">stock.quant.package.form.inherit</field>-->
+    		<!--<field name="model">stock.quant.package</field>-->
+    		<!--<field name="inherit_id" ref="stock.view_quant_package_form"/>-->
+    		<!--<field name="arch" type="xml">-->
+    			<!--<xpath expr="//field[@name='quant_ids']/tree/field[3]" position="after">-->
+    				<!--<field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight"/>-->
+    				<!--<field name="cw_qty_done" groups="tis_catch_weight.group_catch_weight"/>-->
+    				<!--<field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>-->
+    			<!--</xpath>-->
+    		<!--</field>-->
+    	<!--</record>-->
+    	
+    </data>
+</odoo>
