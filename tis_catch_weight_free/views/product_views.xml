@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_product_form_catchweight">
+    		<field name="name">product.form.inherit</field>
+    		<field name="model">product.template</field>
+    		<field name="inherit_id" ref="product.product_template_form_view"/>
+    		<field name="arch" type="xml">
+    			<xpath expr="//field[@name='list_price']" position="replace">
+    				<label for="list_price"/>
+    				<span>
+    					<field name="list_price" widget='monetary' 
+    						options="{'currency_field': 'currency_id', 'field_digits': True}" class="oe_left"/>
+    					<span groups="tis_catch_weight_free.group_catch_weight" style="font-size:7pt">per:</span>
+    					<field name="sale_price_base"  class="oe_right "  groups="tis_catch_weight_free.group_catch_weight"/>
+    				</span>
+    			</xpath>
+    			<xpath expr="//page[@name='general_information']/group[1]/group[2]/div" position="replace">
+    				<div name="standard_price_uom" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1)]}">
+	    				<field name="standard_price" widget='monetary' 
+	    					options="{'currency_field': 'currency_id', 'field_digits': True}" class="oe_left"/>
+	    				<span groups="tis_catch_weight_free.group_catch_weight" style="font-size:7pt">per:</span>
+	    				<field name="purchase_price_base" class="oe_right" groups="tis_catch_weight_free.group_catch_weight"/>
+    				</div>
+    			</xpath>
+    			<xpath expr="//field[@name='uom_id']" position="after">
+					<field name="cw_uom_id" groups="tis_catch_weight_free.group_catch_weight" options="{'no_create': True}"/>
+    			</xpath>
+    		</field>
+   		</record>
+  	</data>
+</odoo>
