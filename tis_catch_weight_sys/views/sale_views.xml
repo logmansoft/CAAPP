@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_sale_form_catchweight">
+            <field name="name">sale.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
+                    <field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight"/>
+                    <field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/form/group/group/label[@for='qty_delivered']" position="before">
+                    <label for="product_cw_uom_qty"/>
+                    <div class="o_row">
+                        <field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight"/>
+                        <field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
