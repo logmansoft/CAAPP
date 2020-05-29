@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_catching_request_user,catching.request.user,model_catching_request,group_catching_user,1,1,0,1
+access_catching_request_team,catching.request.team,model_catching_request,group_catching_team,1,1,1,1
+access_catching_farm_hanger_user,catching.farm.hanger.user,model_farm_hanger,group_catching_user,1,1,1,1
+access_catching_farm_hanger_team,catching.farm.hanger,model_farm_hanger,group_catching_team,1,0,0,0
