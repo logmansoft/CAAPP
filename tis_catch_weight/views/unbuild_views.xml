@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_mrp_unbulid_form_catchweight">
+    		<field name="name">mrp.unbuild.form.inherit</field>
+    		<field name="model">mrp.unbuild</field>
+    		<field name="inherit_id" ref="mrp.mrp_unbuild_form_view"/>
+    		<field name="arch" type="xml">
+    			<xpath expr="//div[@class='o_row']" position="after">
+    				<label for="unbuild_cw_qty"/>
+    				<div class="o_row">
+	    				<field name="unbuild_cw_qty" groups="tis_catch_weight.group_catch_weight"/>
+	    				<field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+    				</div>
+    			</xpath>
+    		</field>
+    	</record>
+    </data>
+</odoo>

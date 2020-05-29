@@ -1,0 +1,11 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_material_purchase_requisition_employee,acc_purchase_requisition_employee,model_material_purchase_requisition,base.group_user,1,1,1,1
+access_material_purchase_requisition_line_employee,acc_purchase_requisition_line_employee,model_material_purchase_requisition_line,base.group_user,1,1,1,1
+,,,,,,,
+access_material_purchase_requisition_move_line_user,acc_purchase_requisition_user,model_stock_move_requistion_line,base.group_user,1,0,0,0
+access_material_purchase_requisition_move_line_manger,acc_purchase_requisition_manger,model_stock_move_requistion_line,stock.group_stock_manager,1,1,1,1
+,,,,,,,
+access_material_pruchase_order_link_user,acc_pruchase_order_link_user,model_pruchase_order_link,base.group_user,1,0,0,0
+access_material_pruchase_order_link_manger,acc_pruchase_order_link_manger,model_pruchase_order_link,stock.group_stock_manager,1,1,1,1
+,,,,,,,
+access_material_pruchase_order_link_purchase_manger,acc_pruchase_order_link_purchase_manger,model_pruchase_order_link,material_purchase_requisitions.group_purchase_requisition_manager,1,1,1,1

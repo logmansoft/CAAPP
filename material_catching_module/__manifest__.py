@@ -17,7 +17,6 @@
                 'fleet',
                 'mrp',
                 'product',
-                'purchase',
                 ],
     'data': [
         'security/security.xml',

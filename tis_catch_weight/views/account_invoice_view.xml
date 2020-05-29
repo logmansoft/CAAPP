@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+		<record model="ir.ui.view" id="view_account_invoice_form_catchweight">
+    		<field name="name">account.invoice.inherit</field>
+    		<field name="model">account.invoice</field>
+    		<field name="inherit_id" ref="account.invoice_form"/>
+    		<field name="arch" type="xml">
+    			<xpath expr="//notebook/page/field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="after">
+    				<field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+    			</xpath>
+    		</field>
+    	</record>
+    	
+    	<record model="ir.ui.view" id="view_account_invoice_supplier_form_catchweight">
+    		<field name="name">account.invoice.supplier.inherit</field>
+    		<field name="model">account.invoice</field>
+    		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+    		<field name="arch" type="xml">
+    			<xpath expr="//notebook/page/field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="after">
+    				<field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+    			</xpath>
+    		</field>
+    	</record>
+    	
+    </data>
+</odoo>

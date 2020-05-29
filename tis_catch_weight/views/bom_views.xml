@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_bom_form_catchweight">
+    		<field name="name">bom.form.inherit</field>
+    		<field name="model">mrp.bom</field>
+    		<field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+    		<field name="arch" type="xml"> 
+				<xpath expr="//div[hasclass('o_row')]" position="after">
+                    <label for="product_cw_uom_qty" string="Quantity CW"/>
+					<div class="o_row">
+						<field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight"/>
+						<field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+					</div>
+				</xpath>
+    			<xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']" position="after">
+    				<field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+    			</xpath>
+    		</field>
+    	</record>
+    </data>
+</odoo>

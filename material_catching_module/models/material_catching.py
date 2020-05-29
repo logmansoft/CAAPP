@@ -3,8 +3,6 @@
 from odoo import models, fields, api,_
 from odoo.exceptions import ValidationError
 
-from odoo.addons import decimal_precision as dp
-
 class CatchingRequest(models.Model):
     _name = 'catching.request'
 
@@ -62,102 +60,22 @@ class CatchingRequest(models.Model):
     
 
     date = fields.Date('Date', default=fields.Date.today())
-    
-    unit_price = fields.Float('Unit Price', digits=dp.get_precision('Product Price'))
 
-    currency_id = fields.Many2one(
-        'res.currency', 'Currency', compute='_compute_currency_id')
     qty_quality = fields.Float('Quantity After Quality')
     quality_uom = fields.Many2one(
         string='UOM',
         comodel_name='uom.uom',
         ondelete='restrict', default= lambda self: self.product_id and self.product_id.product_uom_id.id or False)
-    
-    purchase_order_id = fields.Many2one(
-        string='Purchase Order',
-        comodel_name='purchase.order',
-        ondelete='restrict',
-    )
-    
-
-    analytic_account_id = fields.Many2one(
-        'account.analytic.account',
-        string='Analytic Account',
-        copy=True,
-    )
-
-    production_id = fields.Many2one(
-        string='MO',
-        comodel_name='mrp.production',
-        ondelete='restrict',
-    )
-    
 
     def send_to_manufacture(self):
         self.state = '2'
 
     def set_confirmed(self):
-
-        purchase_obj = self.env['purchase.order']
-        purchase_line_obj = self.env['purchase.order.line']
-        for rec in self:
-            po_vals = rec.create_vals(self.vendor_id)
-            purchase_order = purchase_obj.create(po_vals)
-            po_line_vals = rec._prepare_po_line(rec, purchase_order)
-
-            purchase_line_obj.sudo().create(po_line_vals)
-            if purchase_order:
-                rec.purchase_order_id = purchase_order.id
         self.state = '2'
 
-    @api.multi
-    def show_mo(self):
-        for rec in self:
-            res = self.env.ref('mrp.mrp_production_action')
-            res = res.read()[0]
-            res['domain'] = str([('id', '=', rec.production_id.id)])
-        return res
 
-    @api.multi
-    def action_show_po(self):
-        for rec in self:
-            purchase_action = self.env.ref('purchase.purchase_form_action')
-            purchase_action = purchase_action.read()[0]
-            purchase_action['domain'] = str([('id', '=', rec.purchase_order_id.id)])
-        return purchase_action
-
-    @api.multi
-    def create_vals(self, partner):
-        po_vals = {
-            'partner_id': partner.id,
-            'currency_id': self.env.user.company_id.currency_id.id,
-            'date_order': fields.Date.today(),
-            'company_id': self.env.user.company_id.id,
-            'origin': self.name,
-            'driver_name': self.driver_id.name,
-            'state': 'purchase'
-        }
-        return po_vals
-    
     def set_quality_done(self):
-        for rec in self:
-            print(rec.purchase_order_id, "====================")
-            if not(rec.purchase_order_id.is_shipped):
-
-                raise ValidationError(_('Please Be Sure that you have already recived The Products'))
-
         self.state = '3'
-
-
-    @api.multi
-    def _compute_currency_id(self):
-        try:
-            main_company = self.sudo().env.ref('base.main_company')
-        except ValueError:
-            main_company = self.env['res.company'].sudo().search([], limit=1, order="id")
-        for template in self:
-           
-            template.currency_id = main_company.sudo().currency_id.id
 
     @api.onchange('vehicle_no')
     def _onchange_vehicle_no(self):
@@ -191,24 +109,6 @@ class CatchingRequest(models.Model):
         else:
             ValidationError(_('Please Be Sure that you have already setting up at least one product with For Catching option'))
         return res
-
-    @api.model
-    def _prepare_po_line(self, line=False, purchase_order=False):
-        po_line_vals = {}
-        if self.env['product.product'].search([('product_tmpl_id', '=', self.product_id.id)])[0]:
-            po_line_vals = {
-                    'product_id': self.env['product.product'].search([('product_tmpl_id', '=', line.product_id.id)])[0].id,
-                    'name':line.product_id.name,
-                    'product_qty': line.incoming_qty,
-                    'product_uom': line.qty_uom.id,
-                    'date_planned': fields.Date.today(),
-                    'price_unit': line.unit_price,
-                    'order_id': purchase_order.id,
-                    'account_analytic_id': line.analytic_account_id.id,
-                    #'custom_requisition_line_id': line.id
-            }
-        return po_line_vals
-
 
 
 class res_partner(models.Model):

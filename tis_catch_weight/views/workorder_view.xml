@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_workorder_form_catchweight">
+    		<field name="name">production.work.order.form.inherit</field>
+    		<field name="model">mrp.workorder</field>
+    		<field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+    		<field name="arch" type="xml">
+				<xpath expr="//div[hasclass('o_row')]" position="after">
+                        <label for="product_cw_uom_qty_produced" string="CW Quantity Produced"/>
+					<div class="o_row">
+						<field name="product_cw_uom_qty_produced" groups="tis_catch_weight.group_catch_weight"/>/
+						<field name="product_cw_uom_qty_production" groups="tis_catch_weight.group_catch_weight"/>
+						<field name="product_cw_uom" groups="tis_catch_weight.group_catch_weight"/>
+						<field name="production_availability" groups="tis_catch_weight.group_catch_weight" nolabel="1" widget="bullet_state" options="{'classes': {'assigned': 'success', 'waiting': 'danger'}}" attrs="{'invisible': [('state', '=', 'done')]}"/>
+					</div>
+				</xpath>
+				<!--<field name="qty_producing" position="after">
+                    <field name="qty_producing_cw" string="Current CW-Qty" attrs="{'readonly': ['|', ('product_tracking', '=', 'serial'), ('state', 'in', ('done', 'cancel'))]}"/>
+				</field>-->
+    			<!--<xpath expr="//field[@name='move_raw_ids']/tree/field[@name='quantity_done']" position="after">
+    				<field name="product_cw_uom_qty" groups="tis_catch_weight.group_catch_weight" string="CW To Consume"/>
+    				<field name="cw_qty_reserved" groups="tis_catch_weight.group_catch_weight"/>
+    				<field name="cw_qty_consumed" groups="tis_catch_weight.group_catch_weight"/>
+    			</xpath>-->
+    		</field>
+    	</record>
+    </data>
+</odoo>

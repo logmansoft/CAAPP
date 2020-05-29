@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_log_services_view_form_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.form</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button string="Stock Request" name="stock_request" type="object"/>
+                </header>
+            </xpath>
+            <xpath expr="//group[3]" position="after">
+                <notebook>
+                    <page string="Spare Parts">
+                        <field name="line_id" editable="bottom">
+                            <tree editable="bottom" create="1" edit="1" delete="1">
+                                <field name="product_id" readonly="0"/>
+                                <field name="product_uom_qty" readonly="0"/>
+                                <field name="flag" widget="checkbox" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

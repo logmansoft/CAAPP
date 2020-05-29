@@ -113,19 +113,12 @@
                 <form string="Catching Request">
                     <header>
                         <!--<button name="send_to_manufacture" string="Send To Manufacture" type="object" states="1" class="oe_highlight" groups="material_catching_module.group_catching_team"/>-->
-                        <button name="set_confirmed" string="First Check/PO" type="object" states="1" class="oe_highlight" groups="material_catching_module.group_catching_user"/>
+                        <button name="set_confirmed" string="First Check" type="object" states="1" class="oe_highlight" groups="material_catching_module.group_catching_user"/>
                         <button name="set_quality_done" string="Quality Confirmation" type="object" states="2" class="oe_highlight" groups="material_catching_module.group_catching_quality"/>
                         <button name="%(production_catching_transformer_action)d" string="Mark as Done/Create Mo" class="oe_highlight" type="action" context="{'qty_quality': qty_quality, 'quality_uom':quality_uom}" states='3'/>
                         <field name="state" widget='statusbar'/>
                     </header>
                     <sheet>
-
-                        <div class="oe_button_box" name="button_box">
-                            <button class="oe_stat_button" type="object" icon="fa-book"
-                                name="show_mo" string="Manufacturing Order" attrs="{'invisible': [('state', '!=', '4')]}"/>
-                            <button class="oe_stat_button" type="object" icon="fa-book"
-                                    name="action_show_po" string="Purchase Order" attrs="{'invisible': [('state', '!=', '2')]}"/>
-                        </div>
                         <group>
 
                             <div class="oe_title">
@@ -145,18 +138,12 @@
                                     <field name="incoming_qty" attrs="{'readonly':[('state', '=', '2')]}"/>
                                     <field name="qty_uom" attrs="{'readonly':[('state', '=', '2')]}"/>
                                 </div>
-                                <label for="unit_price"/>
-                                <div class="o_row">
-                                    <field name="unit_price" attrs="{'readonly':[('state', '=', '2')]}" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
-                        
-                                    <field name="currency_id" invisible="1"/>
-                                </div>
                                 <label for="weight"/>
                                 <div class="o_row">
                                     <field name="weight" attrs="{'readonly':[('state', '=', '2')]}"/>
                                     <field name="uom" attrs="{'readonly':[('state', '=', '2')]}"/>
                                 </div>
-                                <label for="current_weight"/>
+                                <label for="current_weight" attrs="{'invisible': [('state', '=', '1')]}"/>
                                 <div class="o_row">
                                     <field name="current_weight" attrs="{'required': [('state', '=', '1')], 'readonly':[('state', 'in', ['2', '3', '4'])]}"/>
                                     <field name="current_uom" attrs="{'required': [('state', '=', '1')], 'readonly':[('state', 'in', ['2', '3', '4'])]}" />
@@ -172,8 +159,7 @@
                                 <field name="driver_id" readonly="1" force_save="1"/>
                             </group>
                             <group string="Other Info" col="2">
-                                <field name="analytic_account_id" attrs="{'readonly': [('state', '!=', '1')]}" required="1"/>
-                                <field name="vendor_id" attrs="{'readonly': [('state', '!=', '1')]}" domain="[('is_farm', '=', True)]" required="1"/>
+                                <field name="vendor_id" attrs="{'readonly': [('state', '!=', '1')]}" domain="[('is_farm', '=', True)]"/>
                                 <label for="hanger_id"/>
                                 <div class="o_row">
                                     <field name="hanger_id" attrs="{'readonly': [('state', '!=', '1')]}" domain="[('partner_id', '=', vendor_id)]"/>
@@ -201,7 +187,6 @@
                     <field name="date"/>
                     <field name="vendor_id"/>
                     <field name="driver_id"/>
-                    <field name="state"/>
                 </tree>
             </field>
         </record>

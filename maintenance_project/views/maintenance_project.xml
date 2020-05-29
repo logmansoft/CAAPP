@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="maintenance_team_view_form_inherit" model="ir.ui.view">
+        <field name="name">Maintenance Team</field>
+        <field name="model">maintenance.team</field>
+        <field name="inherit_id" ref="maintenance.maintenance_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='member_ids']" position="before">
+                <field name="team_type" widget="selection" />
+                <field name="external_line_ids" editable="bottom" attrs="{'invisible': [('team_type', '=','internal')]}">
+                    <tree editable="bottom" create="1" edit="1" delete="1">
+                        <field name="name" readonly="0"/>
+                        <field name="manpower_cost" />
+                    </tree>
+                </field>
+            </xpath>
+            <xpath expr="//field[@name='member_ids']" position="replace">
+                <field name="member_ids" widget="many2many_tags" attrs="{'invisible': [('team_type', '=','external')]}" options="{'color_field': 'color', 'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_equipment_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">Maintenance Request</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="replace">
+                <header>
+                    <button string="Submit" name="submit" type="object" attrs="{'invisible': [('state', '!=', 'new')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Approve" name="approve" type="object" attrs="{'invisible': [('state', '!=', 'approve')]}" groups="maintenance_project.group_maintenance_department_manager"/>
+                    <button string="Progress" name="progress" type="object" attrs="{'invisible': [('state', '!=', 'approved')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Stock Request" name="stock_request" type="object" attrs="{'invisible': [('state', '!=', 'in_progress')]}" groups="maintenance_project.group_maintenance_request_spare_parts"/>
+                    <button string="Received" name="received" type="object" attrs="{'invisible': [('state', '!=', 'waiting_stock')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Done" name="done" type="object" attrs="{'invisible': [('state', '!=', 'in_progress')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Cancel" name="cancel" type="object" groups="maintenance_project.group_maintenance_project"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="replace">
+            </xpath>
+            <xpath expr="//group//group[2]" position="replace">
+                <group attrs="{'invisible': [('state', 'not in', ['approved','in_progress','waiting_stock','done','canceled'])]}">
+                    <field name="maintenance_team_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="schedule_date"/>
+                    <label for="duration"/>
+                    <div>
+                        <field name="duration"
+                               widget="float_time"
+                               class="oe_inline"/> <span class="ml8">hours</span>
+                    </div>
+                    <field name="priority" widget="priority"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="user_id" string="Responsible"/>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="material_cost" readonly="1"/>
+                <field name="manpower_cost" readonly="1"/>
+                <field name="other_cost" />
+                <field name="cost" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="after">
+                <notebook attrs="{'invisible': [('state', 'not in', ['approved','in_progress','waiting_stock','done','canceled'])]}">
+                    <page string="Spare Parts">
+                        <field name="line_id" editable="bottom">
+                            <tree editable="bottom" create="1" edit="1" delete="1">
+                                <field name="product_id" readonly="0"/>
+                                <field name="product_uom_qty" readonly="0"/>
+                                <field name="flag" widget="checkbox" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="hr_equipment_request_view_tree_inherit" model="ir.ui.view">
+        <field name="name">equipment.request.tree</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="cost" sum="Total Cost"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="maintenance.hr_equipment_request_action" model="ir.actions.act_window">
+        <field name="view_ids" eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('hr_equipment_request_view_kanban_inherit')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('maintenance.hr_equipment_request_view_form')})]"/>
+    </record>
+
+     <record id="hr_equipment_project_view_form" model="ir.ui.view">
+        <field name="name">Maintenance Project</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Project">
+                <header>
+                    <button string="Submit" name="submit" type="object" attrs="{'invisible': [('state', '!=', 'new')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Approve" name="approve" type="object" attrs="{'invisible': [('state', '!=', 'approve')]}" groups="maintenance_project.group_maintenance_department_manager"/>
+                    <button string="Progress" name="progress" type="object" attrs="{'invisible': [('state', '!=', 'approved')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Stock Request" name="stock_request" type="object" attrs="{'invisible': [('state', '!=', 'in_progress')]}" groups="maintenance_project.group_maintenance_request_spare_parts"/>
+                    <button string="Received" name="received" type="object" attrs="{'invisible': [('state', '!=', 'waiting_stock')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Done" name="done" type="object" attrs="{'invisible': [('state', '!=', 'in_progress')]}" groups="maintenance_project.group_maintenance_project"/>
+                    <button string="Cancel" name="cancel" type="object" groups="maintenance_project.group_maintenance_project"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div attrs="{'invisible': [('archive', '=', False)]}">
+                        <span class="badge badge-warning float-right">Canceled</span>
+                    </div>
+                    <div class="oe_right">
+                        <field name="kanban_state" class="oe_inline" widget="state_selection"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1>
+                            <field name="name" placeholder="Maintenance Project"/>
+                        </h1>
+                        <h1>
+                            <field name="parent_id" placeholder="Parent Project" options="{'no_create': True}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="owner_user_id" string="Requested By"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="equipment_id"  context="{'default_category_id':category_id}"/>
+                            <field name="category_id" groups="maintenance.group_equipment_manager" attrs="{'invisible': [('equipment_id', '=', False)]}"/>
+                            <field name="user_id" string="Responsible"/>
+                            <field name="request_date" readonly="True"/>
+                            <field name="close_date" groups="base.group_no_one" readonly="True"/>
+                            <field name="archive" invisible="1"/>
+                            <field name="maintenance_type" widget="radio"/>
+                        </group>
+                        <group attrs="{'invisible': [('state', 'not in', ['approved','in_progress','waiting_stock','done','canceled'])]}">
+                            <field name="maintenance_team_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="schedule_date"/>
+                            <label for="duration"/>
+                            <div>
+                                <field name="duration"
+                                       widget="float_time"
+                                       class="oe_inline"/> <span class="ml8">hours</span>
+                            </div>
+                            <field name="priority" widget="priority"/>
+                            <field name="material_cost" readonly="1"/>
+                            <field name="manpower_cost" readonly="1"/>
+                            <field name="other_cost" />
+                            <field name="cost" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name='description' placeholder="Internal Note ......."/>
+                    <notebook attrs="{'invisible': [('state', 'not in', ['approved','in_progress','waiting_stock','done','canceled'])]}">
+                        <page string="Spare Parts">
+                            <field name="line_id">
+                                <tree editable="bottom" create="1" edit="1" delete="1">
+                                    <field name="product_id" readonly="0"/>
+                                    <field name="product_uom_qty" readonly="0"/>
+                                    <field name="flag" widget="checkbox" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_equipment_request_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">equipment.request.kanban</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="state"/>
+                <field name="color"/>
+                <field name="priority"/>
+                <field name="equipment_id"/>
+                <field name="user_id"/>
+                <field name="owner_user_id"/>
+                <field name="category_id"/>
+                <field name="kanban_state"/>
+                <field name="message_needaction_counter"/>
+                <field name="activity_ids" />
+                <field name="activity_state" />
+                <templates>
+                    <t t-name="kanban-tooltip">
+                       <ul class="oe_kanban_tooltip">
+                          <li t-if="record.category_id.raw_value"><b>Category:</b> <t t-esc="record.category_id.value"/></li>
+                          <li t-if="record.user_id.raw_value"><b>Request to:</b> <t t-esc="record.user_id.value"/></li>
+                       </ul>
+                    </t>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click oe_semantic_html_override">
+                            <div class="o_dropdown_kanban dropdown">
+
+                                <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit...</a></t>
+                                    <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content" tooltip="kanban-tooltip">
+                                <div class="o_kanban_record_top">
+                                    <b class="o_kanban_record_title"><field name="name"/></b>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <span name="owner_user_id" t-if="record.owner_user_id.raw_value">Requested by : <field name="owner_user_id"/><br/></span>
+                                    <span class="oe_grey" t-if="record.equipment_id.raw_value"><field name="equipment_id"/><br/></span>
+                                    <span t-if="record.category_id.raw_value"><field name="category_id"/></span>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority"/>
+                                        <t t-if="record.message_needaction_counter.raw_value">
+                                            <span role="alert" class='oe_kanban_mail_new' title='Unread Messages'><i class='fa fa-comments' role="img" aria-label="Unread Messages"/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+                                        </t>
+                                        <div class="o_kanban_inline_block ml4 mr4">
+                                            <field name="activity_ids" widget="kanban_activity" />
+                                        </div>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="kanban_state" widget="state_selection"/>
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="24" height="24" class="oe_kanban_avatar float-right"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="hr_equipment_request_action_inherit" model="ir.actions.act_window">
+        <field name="name">Maintenance Projects</field>
+        <field name="res_model">maintenance.request</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('hr_equipment_request_view_kanban_inherit')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('hr_equipment_project_view_form')})]"/>
+        <field name="context">{ 'default_user_id': uid,'default_type':'project',}</field>
+        <field name="domain">[('type','=', 'project')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new maintenance project
+            </p>
+        </field>
+    </record>
+
+    <record id="maintenance.hr_equipment_request_action" model="ir.actions.act_window">
+        <field name="context">{ 'default_user_id': uid,'default_type':'regular',}</field>
+        <field name="domain">[('type','=', 'regular')]</field>
+    </record>
+
+<!--    <record id="maintenance_product_search_form_view" model="ir.ui.view">-->
+<!--        <field name="name">product.product.search.maintenance.form</field>-->
+<!--        <field name="model">product.product</field>-->
+<!--        <field name="mode">primary</field>-->
+<!--        <field name="inherit_id" ref="product.product_search_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='name']" position="after">-->
+<!--                <field name="default_code" filter_domain="[('default_code', 'ilike', self)]"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <menuitem
+        id="menu_m_request_form_inherit"
+        name="Maintenance Projects"
+        parent="maintenance.menu_m_request"
+        action="hr_equipment_request_action_inherit"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="3"/>
+</odoo>

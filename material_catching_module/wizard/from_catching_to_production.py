@@ -29,11 +29,8 @@ class ProductionTransformer(models.TransientModel):
         product = self.env['product.product'].search([('product_tmpl_id', '=', self.product_id.id)])[0]
         request = self.env['catching.request'].search([('id', '=', self._context.get('active_id', False))])
         if request:
-            po = self.env['mrp.production'].create({'product_id': product.id,'product_uom_id': self.bom_id.product_uom_id.id,
+            self.env['mrp.production'].create({'product_id': product.id,'product_uom_id': self.bom_id.product_uom_id.id,
             'bom_id': self.bom_id.id, 'product_qty': self.qty_quality, 'origin': request.name})
-            if po:
-                request.production_id = po.id
-                request.product_id.standard_price = request.unit_price
             request.state = '4'
         #self.state = '2'
 
@@ -46,7 +43,7 @@ class ProductionTransformer(models.TransientModel):
     @api.model
     def default_get(self, fields):
         res = super(ProductionTransformer, self).default_get(fields)
-        if res and 'product_id' in res and self.env['product.template'].search([('id', '=', res['product_id'])]):
+        if res and 'product_id' in res:
             res['quality_uom'] = self.env['product.template'].search([('id', '=', res['product_id'])])[0].uom_id.id
             if not 'bom_id' in res:
                 res.update({'bom_id':[]})
