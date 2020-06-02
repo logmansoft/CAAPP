@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+
+<odoo>
+	<data>
+    <record id="inherit_invoice_form_view" model="ir.ui.view">
+        <field name="name">account.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='invoice_line_ids']//tree//field[@name='discount']" position="replace">
+                <field  name="discount_type"
+                        groups="discount_sale_order.group_discount_sale_line"
+                        attrs="{'required' :[('s_discount', '>', 0.0)]}"/>
+                <field  name="s_discount"
+                        groups="discount_sale_order.group_discount_sale_line"/>
+          </xpath>
+          <xpath expr="//group[hasclass('oe_subtotal_footer')]//field[@name='amount_tax']" position="before">
+                <field  name="total_discount"
+                        widget='monetary'
+                        groups="discount_sale_order.group_discount_sale_line"
+                        options="{'currency_field': 'currency_id'}"/>
+                
+          </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>

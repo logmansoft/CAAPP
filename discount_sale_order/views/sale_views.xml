@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+
+<odoo>
+	<data>
+
+		<record id="inherit_sale_order_form_view" model="ir.ui.view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//group[hasclass('oe_subtotal_footer')]" position="replace">
+						<group class="oe_subtotal_footer oe_right">
+							<field name="amount_untaxed"
+								widget="monetary"
+								options="{'currency_field': 'currency_id'}"/>
+							<field  name="total_discount"
+								groups="discount_sale_order.group_discount_sale_line"
+								widget='monetary' 
+								options="{'currency_field': 'currency_id'}"/>
+							<field name="amount_tax"
+								widget="monetary"
+								options="{'currency_field': 'currency_id'}"/>
+							<div class="oe_subtotal_footer_separator oe_inline">
+								<label for="amount_total"/>
+							</div>
+							<field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+						</group>
+				</xpath>
+				<xpath expr="//field[@name='order_line']//form//field[@name='price_unit']" position="after">
+					<field  name="line_sub_total"
+							string="Subtotal"
+							widget="monetary"/>
+					<field  name="discount_type"
+							groups="discount_sale_order.group_discount_sale_line"
+							class="oe_inline"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+					<field  name="line_sub_total"
+							string="Subtotal"
+							widget="monetary"
+							sum="line subtotal"
+							digits="[69,3]"/>
+					<field 	name="discount_type"
+							groups="discount_sale_order.group_discount_sale_line"
+							attrs="{'required' :[('discount', '>', 0.0)]}"/>
+					<field 	name="s_discount"
+							groups="discount_sale_order.group_discount_sale_line"
+							string="Discount"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="replace">
+					<field  name="price_subtotal" 
+							string="Discounted Subtotal" 
+							groups="discount_sale_order.group_discount_sale_line"
+							widget="monetary" 
+							sum="discounted subtotal"
+							digits="[69,3]"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

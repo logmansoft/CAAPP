@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+
+<odoo>
+        <record id="res_config_settings_view_form_sale_discount" model="ir.ui.view">
+            <field name="name">res.config.setting.view</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//h2[2]" position="before">
+                  <h2>Discount</h2>
+                  <p class="text-muted" style="margin-left:5%">
+                      Sale Order Discount Settings
+                  </p>
+                  <div class="row mt16 o_settings_container">
+                      <div class="col-12 col-lg-6 o_setting_box">
+                          <div class="o_setting_left_pane">
+                              <field name="group_discount_sale_line"/>
+                          </div>
+                          <div class="o_setting_right_pane">
+                              <label for="id" string="Discount on Sale Order Line"/>
+                              <div class="text-muted">
+                                  Allow discount on sale order line
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12 col-lg-6 o_setting_box" >
+                          <div class="o_setting_left_pane">
+                              <field name="group_order_global_discount_so"/>
+                          </div>
+                          <div class="o_setting_right_pane">
+                              <label for="id" string="Global Discount"/>
+                              <div class="text-muted">
+                                  A global discount on sale order
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12 col-lg-6 o_setting_box" 
+                           attrs="{'invisible' : [('group_order_global_discount_so', '=', False),('group_discount_sale_line', '=', False)]}">
+                          <div class="o_setting_left_pane"></div>
+                          <div class="o_setting_right_pane">
+                              <label for="id" string="Sale Discount Account"/>
+                              <div class="text-muted">
+                                  Account for discount on sale order
+                              </div>
+                               <div class="text-muted">
+                                <field name="discount_account_so" 
+                                        attrs="{'required' : ['|',('group_order_global_discount_so', '=', True),('group_discount_sale_line', '=', True)]}"/>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="col-12 col-lg-6 o_setting_box"
+                           attrs="{'invisible' : [('group_order_global_discount_so', '=', False)],
+                                   'required' : [('group_order_global_discount_so', '=', True)]}">
+                          <div class="o_setting_left_pane"></div>
+                          <div class="o_setting_right_pane">
+                              <label for="global_discount_tax_so"/>
+                              <div class="text-muted">
+                                  Global discount will be calculated on
+                              </div>
+                              <div class="content-group">
+                                  <div class="mt16">
+                                      <field name="global_discount_tax_so"
+                                             class="o_light_label"
+                                             widget="radio"
+                                       />
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>   
+              </xpath>
+            </field>
+        </record>
+  </odoo>

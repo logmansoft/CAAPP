@@ -1,0 +1,231 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* discount_sale_order
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e-20181005\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-31 17:07+0000\n"
+"PO-Revision-Date: 2020-05-31 17:07+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: discount_sale_order
+#: model:res.groups,name:discount_sale_order.group_order_global_discount_so
+msgid "A Global Discount on Sale Order"
+msgstr "خصم إجمالي لأمر البيع"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_res_config_settings__group_order_global_discount_so
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "A global discount on sale order"
+msgstr "خصم إجمالي لأمر البيع"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,help:discount_sale_order.field_res_config_settings__discount_account_so
+msgid "Account for Global discount on sale order."
+msgstr "حساب خصم المبيعات"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "Account for discount on sale order"
+msgstr "جساب خصم المبيعات"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "Allow discount on sale order line"
+msgstr "السماح بالخصم على مستوى أسطر أمر البيع"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,help:discount_sale_order.field_res_config_settings__group_order_global_discount_so
+msgid "Allows to give a global discount on sale order. "
+msgstr "السماح بعملية الخصم على اجمالي أمر البيع "
+
+#. module: discount_sale_order
+#: model:ir.model.fields,help:discount_sale_order.field_res_config_settings__group_discount_sale_line
+msgid "Allows to give discount on sale order line. "
+msgstr "السماح بعملية الخصم على مستوى أسطر أمر البيع"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_res_config_settings__group_discount_sale_line
+msgid "Apply discount on sale order line"
+msgstr "تطبيق الخصم على أسطر أوامر البيع"
+
+#. module: discount_sale_order
+#: model:ir.model,name:discount_sale_order.model_res_config_settings
+msgid "Config Settings"
+msgstr "ضبط الإعدادت"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_account_invoice_line__s_discount
+#: model:ir.model.fields,field_description:discount_sale_order.field_sale_order_line__s_discount
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.inherit_sale_order_form_view
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "Discount"
+msgstr "الخصم"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_res_config_settings__discount_account_so
+msgid "Discount Account"
+msgstr "حساب الخصم"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_account_invoice__global_discount_type
+#: model:ir.model.fields,field_description:discount_sale_order.field_account_invoice_line__discount_type
+#: model:ir.model.fields,field_description:discount_sale_order.field_sale_order__global_discount_type
+#: model:ir.model.fields,field_description:discount_sale_order.field_sale_order_line__discount_type
+msgid "Discount Type"
+msgstr "نوع الخصم"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+#: model:res.groups,name:discount_sale_order.group_discount_sale_line
+msgid "Discount on Sale Order Line"
+msgstr "الخصم على أسطر أمر البيع"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.inherit_sale_order_form_view
+msgid "Discounted Subtotal"
+msgstr "الإجمالي بعد الخصم"
+
+#. module: discount_sale_order
+#: selection:account.invoice,global_discount_type:0
+#: selection:account.invoice.line,discount_type:0
+#: selection:sale.order,global_discount_type:0
+#: selection:sale.order.line,discount_type:0
+msgid "Fixed"
+msgstr "ثابت"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_account_invoice__global_order_discount
+#: model:ir.model.fields,field_description:discount_sale_order.field_sale_order__global_order_discount
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "Global Discount"
+msgstr "الخصم على المجموع"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_res_config_settings__global_discount_tax_so
+msgid "Global Discount Calculation"
+msgstr "حساب الخصم على المجموع"
+
+#. module: discount_sale_order
+#: code:addons/discount_sale_order/models/account_invoice.py:117
+#, python-format
+msgid "Global Discount!\n"
+"Please first set account for global discount in purchase setting"
+msgstr "!حساب الخصم المكتسب \n"
+"الرجاء تهيئة حساب الخصم المكتسب في إعدادت المشتريات"
+
+#. module: discount_sale_order
+#: code:addons/discount_sale_order/models/account_invoice.py:151
+#, python-format
+msgid "Global Discount!\n"
+"Please first set account for global discount in sale setting"
+msgstr "!حساب الخصم المسموح به \n"
+"الرجاء تهيئة حساب الخصم المسموح به في إعدادت المبيعات"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "Global discount will be calculated on"
+msgstr "الخصم على المجموع يتم حسابه على"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,help:discount_sale_order.field_res_config_settings__global_discount_tax_so
+msgid "Global disount calculation will be (             'untax' : Global discount will be applied before applying tax,             'taxed' : Global disount will be applied after applying tax)"
+msgstr "الخصم على المجموع سيكون كالأتي ('بدون الضريبة' : سيطبق الخصم قبل حساب الضريبة،            'بضريبة' : سيطبق الخصم بعد حساب الضريبة)"
+
+#. module: discount_sale_order
+#: model:ir.model,name:discount_sale_order.model_account_invoice
+msgid "Invoice"
+msgstr "الفاتورة"
+
+#. module: discount_sale_order
+#: model:ir.model,name:discount_sale_order.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "بند الفاتورة"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_sale_order_line__line_sub_total
+msgid "Line Subtotal"
+msgstr "المجموع قبل الخصم"
+
+#. module: discount_sale_order
+#: selection:account.invoice,global_discount_type:0
+#: selection:account.invoice.line,discount_type:0
+#: selection:sale.order,global_discount_type:0
+#: selection:sale.order.line,discount_type:0
+msgid "Percent"
+msgstr "نسبة"
+
+#. module: discount_sale_order
+#: code:addons/discount_sale_order/models/sale.py:138
+#, python-format
+msgid "Please define income account for this product: \"%s\" (id:%d) - or for its category: \"%s\"."
+msgstr ":الرجاء تعريف حساب الإيراد لهذا المنتج  \"%s\" (id:%d) - :أو لتصنيف المنتج \"%s\"."
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_sale_order_line__price_reduce
+msgid "Price Reduce"
+msgstr "تخفيض السعر"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "Sale Discount Account"
+msgstr "حساب الخصم المسموح به"
+
+#. module: discount_sale_order
+#: model:ir.model,name:discount_sale_order.model_sale_order
+msgid "Sale Order"
+msgstr "أمر البيع"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.res_config_settings_view_form_sale_discount
+msgid "Sale Order Discount Settings"
+msgstr "ضبط اعدادات الخصم لأمر البيع"
+
+#. module: discount_sale_order
+#: model:ir.model,name:discount_sale_order.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "سطر أمر المبيعات"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.inherit_sale_order_form_view
+msgid "Subtotal"
+msgstr "المجموع"
+
+#. module: discount_sale_order
+#: selection:res.config.settings,global_discount_tax_so:0
+msgid "Tax added amount"
+msgstr "بالضريبة"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_account_invoice__total_discount
+#: model:ir.model.fields,field_description:discount_sale_order.field_sale_order__total_discount
+msgid "Total Discount"
+msgstr "إجمالي الخصم"
+
+#. module: discount_sale_order
+#: model:ir.model.fields,field_description:discount_sale_order.field_account_invoice__total_global_discount
+msgid "Total Global Discount"
+msgstr "إجمالي الخصم على المجموع"
+
+#. module: discount_sale_order
+#: selection:res.config.settings,global_discount_tax_so:0
+msgid "Untaxed amount"
+msgstr "بدون ضريبة"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.inherit_sale_order_form_view
+msgid "discounted subtotal"
+msgstr "المجموع بعد الخصم"
+
+#. module: discount_sale_order
+#: model_terms:ir.ui.view,arch_db:discount_sale_order.inherit_sale_order_form_view
+msgid "line subtotal"
+msgstr "المجموع قبل الخصم"
+
